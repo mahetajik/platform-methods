@@ -38,7 +38,21 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    // UPDATED: Contents title, Files first, No jumping
+    Component.Explorer({
+      title: "Contents",
+      useSavedState: false,
+      sortFn: (a, b) => {
+        if ((!a.file && !b.file) || (a.file && b.file)) {
+          return a.displayName.localeCompare(b.displayName)
+        }
+        if (a.file && !b.file) {
+          return -1
+        } else {
+          return 1
+        }
+      },
+    }),
   ],
   right: [
     Component.Graph(),
@@ -62,7 +76,21 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    // UPDATED: Contents title, Files first, No jumping
+    Component.Explorer({
+      title: "Contents",
+      useSavedState: false,
+      sortFn: (a, b) => {
+        if ((!a.file && !b.file) || (a.file && b.file)) {
+          return a.displayName.localeCompare(b.displayName)
+        }
+        if (a.file && !b.file) {
+          return -1
+        } else {
+          return 1
+        }
+      },
+    }),
   ],
   right: [],
 }
