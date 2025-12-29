@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "www.kausharmahetaji.com/platform-methods",
+    baseUrl: "kausharmahetaji.github.io/platform-methods",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {
