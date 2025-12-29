@@ -39,7 +39,7 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     // UPDATED: Title removed
-    Component.Explorer({ title: "" }),
+    Component.Explorer({ title: "Contents" }),
   ],
   right: [
     Component.Graph(),
@@ -64,7 +64,7 @@ export const defaultListPageLayout: PageLayout = {
       ],
     }),
     // UPDATED: Title removed
-    Component.Explorer({ title: "" }),
+    Component.Explorer({ title: "Contents" }),
   ],
   right: [],
 }
