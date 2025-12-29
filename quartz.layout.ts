@@ -38,7 +38,8 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    // UPDATED: Title removed
+    Component.Explorer({ title: "" }),
   ],
   right: [
     Component.Graph(),
@@ -62,7 +63,8 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    // UPDATED: Title removed
+    Component.Explorer({ title: "" }),
   ],
   right: [],
 }
