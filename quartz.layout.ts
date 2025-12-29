@@ -38,18 +38,18 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    // UPDATED: Title is "Contents", Files sort before Folders
+    // UPDATED: Contents title, Files first, No jumping
     Component.Explorer({
       title: "Contents",
+      useSavedState: false,
       sortFn: (a, b) => {
         if ((!a.file && !b.file) || (a.file && b.file)) {
-          // If both are files OR both are folders, sort alphabetically
           return a.displayName.localeCompare(b.displayName)
         }
         if (a.file && !b.file) {
-          return -1 // File comes first
+          return -1
         } else {
-          return 1 // Folder comes second
+          return 1
         }
       },
     }),
@@ -76,18 +76,18 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    // UPDATED: Title is "Contents", Files sort before Folders
+    // UPDATED: Contents title, Files first, No jumping
     Component.Explorer({
       title: "Contents",
+      useSavedState: false,
       sortFn: (a, b) => {
         if ((!a.file && !b.file) || (a.file && b.file)) {
-          // If both are files OR both are folders, sort alphabetically
           return a.displayName.localeCompare(b.displayName)
         }
         if (a.file && !b.file) {
-          return -1 // File comes first
+          return -1
         } else {
-          return 1 // Folder comes second
+          return 1
         }
       },
     }),
