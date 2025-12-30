@@ -1,3 +1,15 @@
 @use "./base.scss";
 
 // put your custom CSS here!
+
+/* Add a border to the Search button in the sidebar */
+.search-button {
+  border: 1px solid var(--gray) !important;
+  /* Optional: Make the text inside a bit darker too */
+  color: var(--darkgray) !important; 
+}
+
+/* Optional: Add a border to the input box inside the popup modal */
+.search-container input {
+  border: 1px solid var(--gray) !important;
+}

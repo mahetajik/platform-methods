@@ -8,8 +8,8 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-      "Kaushar Mahetaji": "https://kausharmahetaji.com",
-      "Discord Community": "",
+      //"Kaushar Mahetaji": "https://kausharmahetaji.com",
+    //  "Discord Community": "",
     },
   }),
 }
@@ -22,7 +22,7 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
-    Component.ContentMeta(),
+    // Component.ContentMeta(), <--- REMOVED THIS LINE (Removes Date & Reading Time)
     Component.TagList(),
   ],
   left: [
@@ -38,32 +38,34 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    // UPDATED: Contents title, Files first, No jumping
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
       sortFn: (a, b) => {
-        if ((!a.file && !b.file) || (a.file && b.file)) {
-          return a.displayName.localeCompare(b.displayName)
-        }
-        if (a.file && !b.file) {
-          return -1
-        } else {
-          return 1
-        }
+        const aIsFolder = a.children.length > 0
+        const bIsFolder = b.children.length > 0
+        if (!aIsFolder && bIsFolder) return -1
+        if (aIsFolder && !bIsFolder) return 1
+        return a.displayName.localeCompare(b.displayName, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
       },
     }),
   ],
   right: [
-    Component.Graph(),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
 }
 
-// components for pages that display lists of pages  (e.g. tags or folders)
+// components for pages that display lists of pages (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
+  beforeBody: [
+    Component.Breadcrumbs(), 
+    Component.ArticleTitle(), 
+    // Component.ContentMeta() <--- REMOVED THIS LINE HERE TOO
+  ],
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
@@ -76,19 +78,18 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    // UPDATED: Contents title, Files first, No jumping
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
       sortFn: (a, b) => {
-        if ((!a.file && !b.file) || (a.file && b.file)) {
-          return a.displayName.localeCompare(b.displayName)
-        }
-        if (a.file && !b.file) {
-          return -1
-        } else {
-          return 1
-        }
+        const aIsFolder = a.children.length > 0
+        const bIsFolder = b.children.length > 0
+        if (!aIsFolder && bIsFolder) return -1
+        if (aIsFolder && !bIsFolder) return 1
+        return a.displayName.localeCompare(b.displayName, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
       },
     }),
   ],

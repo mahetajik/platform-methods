@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Platform Tools and Platform Power: Data and Methods",
+    pageTitle: "Platform Tools and Platform Power",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
@@ -78,7 +78,20 @@ const config: QuartzConfig = {
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
       Plugin.ContentPage(),
-      Plugin.FolderPage(),
+      Plugin.FolderPage({
+        sort: (f1, f2) => {
+          const aIsFolder = f1.filePath?.endsWith("index.md")
+          const bIsFolder = f2.filePath?.endsWith("index.md")
+          if (!aIsFolder && bIsFolder) return -1
+          if (aIsFolder && !bIsFolder) return 1
+          const aTitle = f1.frontmatter?.title || f1.slug || ""
+          const bTitle = f2.frontmatter?.title || f2.slug || ""
+          return aTitle.localeCompare(bTitle, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          })
+        },
+      }),
       Plugin.TagPage(),
       Plugin.ContentIndex({
         enableSiteMap: true,
@@ -88,7 +101,6 @@ const config: QuartzConfig = {
       Plugin.Static(),
       Plugin.Favicon(),
       Plugin.NotFoundPage(),
-      // Comment out CustomOgImages to speed up build time
       Plugin.CustomOgImages(),
     ],
   },
