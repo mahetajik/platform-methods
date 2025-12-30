@@ -59,7 +59,7 @@ export const defaultContentPageLayout: PageLayout = {
     }),
   ],
   right: [
-    Component.Graph(),
+    // Graph component removed
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
