@@ -4,8 +4,11 @@ import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
 
 const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzComponentProps) => {
-  const title = cfg?.pageTitle ?? i18n(cfg.locale).propertyDefaults.title
-  const baseDir = pathToRoot(fileData.slug!)
+  // Safe access to config and locale
+  const title = cfg?.pageTitle ?? i18n(cfg?.locale ?? "en-US").propertyDefaults.title
+  // Safe access to slug
+  const baseDir = pathToRoot(fileData.slug ?? "")
+  
   return (
     <div class={classNames(displayClass, "page-title")}>
       <a href={baseDir}>
@@ -33,7 +36,7 @@ PageTitle.css = `
 .page-subtitle {
   font-size: 1.1rem;
   margin: 0.1rem 0 0 0;
-  color: #777777; /* UPDATED: Hardcoded grey to ensure it appears grey */
+  color: #777777;
   font-weight: 400;
   font-style: italic;
 }
