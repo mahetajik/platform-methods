@@ -39,6 +39,8 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
+      // UPDATED: This line filters out the "glossary" folder from the menu
+      filterFn: (node) => node.name !== "glossary",
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
         const bIsFolder = b.children.length > 0
@@ -78,6 +80,8 @@ export const defaultListPageLayout: PageLayout = {
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
+      // UPDATED: This line filters out the "glossary" folder from the menu
+      filterFn: (node) => node.name !== "glossary",
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
         const bIsFolder = b.children.length > 0
