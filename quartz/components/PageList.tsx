@@ -1,8 +1,8 @@
 import { FullSlug, resolveRelative } from "../util/path"
 import { QuartzPluginData } from "../plugins/vfile"
-import { Date, getDate } from "./Date"
-import { QuartzComponent, QuartzComponentProps } from "./types"
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { GlobalConfiguration } from "../cfg"
+import { i18n } from "../i18n" // <--- Added this missing import
 
 export type SortFn = (f1: QuartzPluginData, f2: QuartzPluginData) => number
 
@@ -34,7 +34,7 @@ export default ((opts?: PageListOptions) => {
           return (
             <li class="section-li">
               <div class="section">
-                {/* UPDATED: Removed the Date component here */}
+                {/* Date removed from here */}
                 <div class="desc">
                   <h3>
                     <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
@@ -42,7 +42,6 @@ export default ((opts?: PageListOptions) => {
                     </a>
                   </h3>
                 </div>
-                {/* Only render tags if they exist */}
                 {tags.length > 0 && (
                   <ul class="meta tags">
                     {tags.map((tag) => (
@@ -74,4 +73,4 @@ export default ((opts?: PageListOptions) => {
   }
   `
   return PageList
-}) satisfies QuartzComponent
+}) satisfies QuartzComponentConstructor
