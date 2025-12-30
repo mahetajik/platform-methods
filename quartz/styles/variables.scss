@@ -18,12 +18,13 @@ $desktop: "(min-width: #{map.get($breakpoints, desktop)})";
 
 $pageWidth: #{map.get($breakpoints, mobile)};
 
-// UPDATED: Set left sidebar to 380px
+// Sidebar widths
 $sidePanelWidth: 380px; 
-// NEW: Set right sidebar to 280px (keeps it from getting too big)
 $sidePanelRightWidth: 280px; 
 
-$topSpacing: 6rem;
+// UPDATED: Reduced top spacing from 6rem to 2rem
+$topSpacing: 2rem;
+
 $boldWeight: 700;
 $semiBoldWeight: 600;
 $normalWeight: 400;
@@ -55,7 +56,6 @@ $tabletGrid: (
 
 $desktopGrid: (
   templateRows: "auto auto auto",
-  // UPDATED: Uses $sidePanelWidth (left) and $sidePanelRightWidth (right)
   templateColumns: "#{$sidePanelWidth} auto #{$sidePanelRightWidth}",
   rowGap: "5px",
   columnGap: "5px",
