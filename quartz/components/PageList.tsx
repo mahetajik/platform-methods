@@ -56,7 +56,11 @@ export default ((opts?: PageListOptions) => {
           return (
             <li class="section-li">
               <div class="section">
-                {/* DATE COMPONENT REMOVED FROM HERE */}
+                {page.dates && (
+                  <p class="meta">
+                    <Date date={getDate(cfg, page)!} locale={cfg.locale} />
+                  </p>
+                )}
                 <div class="desc">
                   <h3>
                     <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
@@ -65,7 +69,7 @@ export default ((opts?: PageListOptions) => {
                   </h3>
                 </div>
                 {tags.length > 0 && (
-                  <ul class="meta tags">
+                  <ul class="tags">
                     {tags.map((tag) => (
                       <li>
                         <a
