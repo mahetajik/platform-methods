@@ -31,7 +31,7 @@ PageTitle.css = `
   font-weight: 700;
 }
 .page-subtitle {
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   margin: 0.1rem 0 0 0;
   color: #777777; /* UPDATED: Hardcoded grey to ensure it appears grey */
   font-weight: 400;
