@@ -8,7 +8,8 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Platform Tools and Platform Power: Data and Methods",
+    // UPDATED: Shortened title so the subtitle (Data and Methods) can sit underneath it without repetition
+    pageTitle: "Platform Tools and Platform Power",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
@@ -114,4 +115,4 @@ const config: QuartzConfig = {
   },
 }
 
-export default config
+export
