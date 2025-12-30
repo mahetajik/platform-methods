@@ -10,7 +10,6 @@ const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzCompo
     <div class={classNames(displayClass, "page-title")}>
       <a href={baseDir}>
         <h1>{title}</h1>
-        {/* EDIT YOUR SUBTITLE BELOW */}
         <p class="page-subtitle">Data and Methods</p>
       </a>
     </div>
@@ -32,9 +31,9 @@ PageTitle.css = `
   font-weight: 700;
 }
 .page-subtitle {
-  font-size: 1rem;
-  margin: 0.2rem 0 0 0;
-  color: var(--darkgray);
+  font-size: 0.8rem;
+  margin: 0.1rem 0 0 0;
+  color: #777777; /* UPDATED: Hardcoded grey to ensure it appears grey */
   font-weight: 400;
   font-style: italic;
 }
