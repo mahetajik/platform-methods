@@ -38,19 +38,14 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    // UPDATED: Explorer with Files (Notes) sorted before Folders
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
         const bIsFolder = b.children.length > 0
-
-        // 1. Sort files before folders
         if (!aIsFolder && bIsFolder) return -1
         if (aIsFolder && !bIsFolder) return 1
-
-        // 2. Sort alphabetically (numeric: true handles "Note 2" vs "Note 10" correctly)
         return a.displayName.localeCompare(b.displayName, undefined, {
           numeric: true,
           sensitivity: "base",
@@ -59,7 +54,6 @@ export const defaultContentPageLayout: PageLayout = {
     }),
   ],
   right: [
-    // Graph component removed
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
@@ -80,19 +74,14 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    // UPDATED: Explorer with Files (Notes) sorted before Folders
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
         const bIsFolder = b.children.length > 0
-
-        // 1. Sort files before folders
         if (!aIsFolder && bIsFolder) return -1
         if (aIsFolder && !bIsFolder) return 1
-
-        // 2. Sort alphabetically
         return a.displayName.localeCompare(b.displayName, undefined, {
           numeric: true,
           sensitivity: "base",
