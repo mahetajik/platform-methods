@@ -13,3 +13,13 @@
 .search-container input {
   border: 1px solid var(--gray) !important;
 }
+
+/* Remove dates from the list of notes in Folders/Tags */
+.section-li .meta .date {
+  display: none !important;
+}
+
+/* Optional: Adjust spacing if the removal makes it look gappy */
+.section-li .meta {
+  margin-top: 0;
+}
