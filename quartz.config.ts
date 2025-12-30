@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Platform Studies Data and Methods",
+    pageTitle: "Platform Tools and Platform Power: Data and Methods",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
@@ -29,12 +29,12 @@ const config: QuartzConfig = {
       },
       colors: {
         lightMode: {
-          light: "#faf8f8",
+          light: "#ebe1d1",
           lightgray: "#e5e5e5",
-          gray: "#b8b8b8",
-          darkgray: "#4e4e4e",
+          gray: "#000000",
+          darkgray: "#000000",
           dark: "#2b2b2b",
-          secondary: "#284b63",
+          secondary: "#0d4715",
           tertiary: "#84a59d",
           highlight: "rgba(143, 159, 169, 0.15)",
           textHighlight: "#fff23688",
