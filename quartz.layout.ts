@@ -8,8 +8,8 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-      //"Kaushar Mahetaji": "https://kausharmahetaji.com",
-    //  "Discord Community": "",
+     // "Kaushar Mahetaji": "https://kausharmahetaji.com",
+     // "Discord Community": "",
     },
   }),
 }
@@ -22,7 +22,7 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
-    // Component.ContentMeta(), <--- REMOVED THIS LINE (Removes Date & Reading Time)
+    // Component.ContentMeta() removed (Dates/Read time)
     Component.TagList(),
   ],
   left: [
@@ -35,7 +35,7 @@ export const defaultContentPageLayout: PageLayout = {
           grow: true,
         },
         { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
+        // Component.ReaderMode() removed (Reading Icon)
       ],
     }),
     Component.Explorer({
@@ -54,6 +54,7 @@ export const defaultContentPageLayout: PageLayout = {
     }),
   ],
   right: [
+    // Component.Graph() removed
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
@@ -63,8 +64,8 @@ export const defaultContentPageLayout: PageLayout = {
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [
     Component.Breadcrumbs(), 
-    Component.ArticleTitle(), 
-    // Component.ContentMeta() <--- REMOVED THIS LINE HERE TOO
+    Component.ArticleTitle(),
+    // Component.ContentMeta() removed
   ],
   left: [
     Component.PageTitle(),
