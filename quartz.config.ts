@@ -29,26 +29,27 @@ const config: QuartzConfig = {
       },
       colors: {
         lightMode: {
-          light: "#ebe1d1",
+          light: "#f7f4ed",      // UPDATED: Lighter shade of beige
           lightgray: "#e5e5e5",
           gray: "#000000",
           darkgray: "#000000",
-          dark: "#2b2b2b",
-          secondary: "#0d4715",
+          dark: "#101419",       // UPDATED: Very dark navy-black for text
+          secondary: "#1a3a6e",  // UPDATED: Blue slightly lighter than #001f4e
           tertiary: "#84a59d",
           highlight: "rgba(143, 159, 169, 0.15)",
           textHighlight: "#fff23688",
         },
+        // Force Light Mode colors in Dark Mode (as requested previously)
         darkMode: {
-          light: "#161618",
-          lightgray: "#393639",
-          gray: "#646464",
-          darkgray: "#d4d4d4",
-          dark: "#ebebec",
-          secondary: "#7b97aa",
+          light: "#f7f4ed",
+          lightgray: "#e5e5e5",
+          gray: "#000000",
+          darkgray: "#000000",
+          dark: "#101419",
+          secondary: "#1a3a6e",
           tertiary: "#84a59d",
           highlight: "rgba(143, 159, 169, 0.15)",
-          textHighlight: "#b3aa0288",
+          textHighlight: "#fff23688",
         },
       },
     },
