@@ -8,8 +8,8 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-     // "Kaushar Mahetaji": "https://kausharmahetaji.com",
-     // "Discord Community": "",
+      "Kaushar Mahetaji": "https://kausharmahetaji.com",
+      "Discord Community": "",
     },
   }),
 }
@@ -22,7 +22,6 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
-    // Component.ContentMeta() removed (Dates/Read time)
     Component.TagList(),
   ],
   left: [
@@ -34,8 +33,7 @@ export const defaultContentPageLayout: PageLayout = {
           Component: Component.Search(),
           grow: true,
         },
-        { Component: Component.Darkmode() },
-        // Component.ReaderMode() removed (Reading Icon)
+        // Component.Darkmode() removed
       ],
     }),
     Component.Explorer({
@@ -54,7 +52,6 @@ export const defaultContentPageLayout: PageLayout = {
     }),
   ],
   right: [
-    // Component.Graph() removed
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
@@ -65,7 +62,6 @@ export const defaultListPageLayout: PageLayout = {
   beforeBody: [
     Component.Breadcrumbs(), 
     Component.ArticleTitle(),
-    // Component.ContentMeta() removed
   ],
   left: [
     Component.PageTitle(),
@@ -76,7 +72,7 @@ export const defaultListPageLayout: PageLayout = {
           Component: Component.Search(),
           grow: true,
         },
-        { Component: Component.Darkmode() },
+        // Component.Darkmode() removed
       ],
     }),
     Component.Explorer({
