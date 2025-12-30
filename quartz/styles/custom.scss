@@ -14,12 +14,12 @@
   border: 1px solid var(--gray) !important;
 }
 
-/* Remove dates from the list of notes in Folders/Tags */
-.section-li .meta .date {
+/* Hide the date in Folder and Tag lists */
+.section-li .section p.meta {
   display: none !important;
 }
 
-/* Optional: Adjust spacing if the removal makes it look gappy */
-.section-li .meta {
-  margin-top: 0;
+/* Fix spacing so the title doesn't look pushed down */
+.section-li .section .desc {
+  margin-top: 0 !important;
 }
