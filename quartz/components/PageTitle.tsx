@@ -4,9 +4,8 @@ import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
 
 const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzComponentProps) => {
-  // Safe access to config and locale
+  // Safe fallback if config isn't loaded yet
   const title = cfg?.pageTitle ?? i18n(cfg?.locale ?? "en-US").propertyDefaults.title
-  // Safe access to slug
   const baseDir = pathToRoot(fileData.slug ?? "")
   
   return (
@@ -32,6 +31,7 @@ PageTitle.css = `
   margin: 0;
   line-height: 1.2;
   font-weight: 700;
+  font-family: var(--headerFont);
 }
 .page-subtitle {
   font-size: 1.1rem;
