@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Platform Studies Data and Methods",
+    pageTitle: "Platform Tools and Platform Power: Data and Methods",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
