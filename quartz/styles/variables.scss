@@ -17,7 +17,12 @@ $tablet: "(min-width: #{map.get($breakpoints, mobile)}) and (max-width: #{map.ge
 $desktop: "(min-width: #{map.get($breakpoints, desktop)})";
 
 $pageWidth: #{map.get($breakpoints, mobile)};
-$sidePanelWidth: 320px; //380px;
+
+// UPDATED: Set left sidebar to 380px
+$sidePanelWidth: 380px; 
+// NEW: Set right sidebar to 280px (keeps it from getting too big)
+$sidePanelRightWidth: 280px; 
+
 $topSpacing: 6rem;
 $boldWeight: 700;
 $semiBoldWeight: 600;
@@ -35,6 +40,7 @@ $mobileGrid: (
       "grid-sidebar-right"\
       "grid-footer"',
 );
+
 $tabletGrid: (
   templateRows: "auto auto auto auto",
   templateColumns: "#{$sidePanelWidth} auto",
@@ -46,9 +52,11 @@ $tabletGrid: (
       "grid-sidebar-left grid-sidebar-right"\
       "grid-sidebar-left grid-footer"',
 );
+
 $desktopGrid: (
   templateRows: "auto auto auto",
-  templateColumns: "#{$sidePanelWidth} auto #{$sidePanelWidth}",
+  // UPDATED: Uses $sidePanelWidth (left) and $sidePanelRightWidth (right)
+  templateColumns: "#{$sidePanelWidth} auto #{$sidePanelRightWidth}",
   rowGap: "5px",
   columnGap: "5px",
   templateAreas:
