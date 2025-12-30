@@ -8,7 +8,6 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    // UPDATED: Shortened title so the subtitle (Data and Methods) can sit underneath it without repetition
     pageTitle: "Platform Tools and Platform Power",
     pageTitleSuffix: "",
     enableSPA: true,
@@ -79,21 +78,14 @@ const config: QuartzConfig = {
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
       Plugin.ContentPage(),
-      // UPDATED: Logic to sort Notes (files) before Folders on the page list
       Plugin.FolderPage({
         sort: (f1, f2) => {
-          // 1. Identify if item is a folder (indicated by having 'index.md' as filename)
           const aIsFolder = f1.filePath?.endsWith("index.md")
           const bIsFolder = f2.filePath?.endsWith("index.md")
-
-          // 2. Sort Files (Notes) before Folders
           if (!aIsFolder && bIsFolder) return -1
           if (aIsFolder && !bIsFolder) return 1
-
-          // 3. Default: Sort alphabetically by title
           const aTitle = f1.frontmatter?.title || f1.slug || ""
           const bTitle = f2.frontmatter?.title || f2.slug || ""
-
           return aTitle.localeCompare(bTitle, undefined, {
             numeric: true,
             sensitivity: "base",
@@ -109,10 +101,9 @@ const config: QuartzConfig = {
       Plugin.Static(),
       Plugin.Favicon(),
       Plugin.NotFoundPage(),
-      // Comment out CustomOgImages to speed up build time
       Plugin.CustomOgImages(),
     ],
   },
 }
 
-export
+export default config
