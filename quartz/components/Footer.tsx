@@ -14,8 +14,8 @@ export default ((opts?: FooterOptions) => {
       <footer class={`${displayClass ?? ""}`}>
         <hr />
         <p>
-          {/* UPDATED: Removed "Created with Quartz" */}
-          © {year}
+          {/* Custom Copyright Text with Link */}
+          <a href="https://kausharmahetaji.com">Kaushar Mahetaji</a> @ {year}
         </p>
         <ul>
           {Object.entries(links).map(([text, link]) => (
