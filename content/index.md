@@ -1,5 +1,5 @@
 ---
-title: How to Study Platform Tools and Platform Power
+title: Researching Platform Tools and Platform Power
 subtitle:
 ---
 > What are platform tools? 
