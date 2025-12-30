@@ -38,19 +38,23 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    // UPDATED: Contents title, Files first, No jumping
+    // UPDATED: Explorer with Files (Notes) sorted before Folders
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
       sortFn: (a, b) => {
-        if ((!a.file && !b.file) || (a.file && b.file)) {
-          return a.displayName.localeCompare(b.displayName)
-        }
-        if (a.file && !b.file) {
-          return -1
-        } else {
-          return 1
-        }
+        const aIsFolder = a.children.length > 0
+        const bIsFolder = b.children.length > 0
+
+        // 1. Sort files before folders
+        if (!aIsFolder && bIsFolder) return -1
+        if (aIsFolder && !bIsFolder) return 1
+
+        // 2. Sort alphabetically (numeric: true handles "Note 2" vs "Note 10" correctly)
+        return a.displayName.localeCompare(b.displayName, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
       },
     }),
   ],
@@ -61,7 +65,7 @@ export const defaultContentPageLayout: PageLayout = {
   ],
 }
 
-// components for pages that display lists of pages  (e.g. tags or folders)
+// components for pages that display lists of pages (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
   left: [
@@ -76,19 +80,23 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    // UPDATED: Contents title, Files first, No jumping
+    // UPDATED: Explorer with Files (Notes) sorted before Folders
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
       sortFn: (a, b) => {
-        if ((!a.file && !b.file) || (a.file && b.file)) {
-          return a.displayName.localeCompare(b.displayName)
-        }
-        if (a.file && !b.file) {
-          return -1
-        } else {
-          return 1
-        }
+        const aIsFolder = a.children.length > 0
+        const bIsFolder = b.children.length > 0
+
+        // 1. Sort files before folders
+        if (!aIsFolder && bIsFolder) return -1
+        if (aIsFolder && !bIsFolder) return 1
+
+        // 2. Sort alphabetically
+        return a.displayName.localeCompare(b.displayName, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
       },
     }),
   ],
