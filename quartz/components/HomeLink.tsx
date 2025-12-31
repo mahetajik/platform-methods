@@ -7,7 +7,7 @@ const HomeLink: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
       <p style={{ margin: "0.5rem 0", fontWeight: "bold" }}>
         {/* Link to "index" but show text "About" */}
         <a href={resolveRelative(fileData.slug!, "index")} class="internal">
-          About Me and My Work on Platform Tools and Platform Power
+          About the Site
         </a>
       </p>
     </div>
