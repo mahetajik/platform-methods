@@ -9,7 +9,7 @@ export const sharedPageComponents: SharedLayout = {
   footer: Component.Footer({
     links: {
     //  "Kaushar Mahetaji": "https://kausharmahetaji.com",
-   //   "Discord Community": "",
+    //  "Discord Community": "",
     },
   }),
 }
@@ -39,8 +39,8 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // UPDATED: This line filters out the "glossary" folder from the menu
-      filterFn: (node) => node.name !== "glossary",
+      // FIX: Check for both lowercase "glossary" and capitalized "Glossary"
+      filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
         const bIsFolder = b.children.length > 0
@@ -64,6 +64,7 @@ export const defaultListPageLayout: PageLayout = {
   beforeBody: [
     Component.Breadcrumbs(), 
     Component.ArticleTitle(),
+    Component.ContentMeta(), // Recommended: Shows count of pages
   ],
   left: [
     Component.PageTitle(),
@@ -80,8 +81,8 @@ export const defaultListPageLayout: PageLayout = {
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // UPDATED: This line filters out the "glossary" folder from the menu
-      filterFn: (node) => node.name !== "glossary",
+      // FIX: Check for both lowercase "glossary" and capitalized "Glossary"
+      filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
         const bIsFolder = b.children.length > 0
@@ -95,4 +96,8 @@ export const defaultListPageLayout: PageLayout = {
     }),
   ],
   right: [],
+  // FIX: Added PageList here. Without this, folder/tag pages are empty.
+  afterBody: [
+    Component.PageList(),
+  ],
 }
