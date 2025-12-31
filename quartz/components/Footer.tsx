@@ -14,7 +14,6 @@ export default ((opts?: FooterOptions) => {
       <footer class={`${displayClass ?? ""}`}>
         <hr />
         <p>
-          {/* Custom Copyright Text with Link */}
           <a href="https://kausharmahetaji.com">Kaushar Mahetaji</a> @ {year}
         </p>
         <ul>
@@ -25,68 +24,78 @@ export default ((opts?: FooterOptions) => {
           ))}
         </ul>
 
-        {/* --- PASSWORD PROTECTION OVERLAY --- */}
-        {/* This covers the screen until the correct password is entered */}
+        {/* --- NUCLEAR PASSWORD PROTECTION --- */}
         <div id="site-lock" style={{
             position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "#161618", // Dark background to hide content
-            zIndex: 99999, // Sit on top of everything
-            display: "flex", // Visible by default
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#161618", // Hardcoded dark color
+            backgroundImage: "linear-gradient(to bottom, #161618, #000000)", // Double layer to ensure opacity
+            zIndex: "2147483647", // Maximum CSS value (32-bit integer)
+            display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            color: "#fff",
-            fontFamily: "var(--bodyFont)",
+            cursor: "default", // Stop cursor interaction with background
+            userSelect: "none", // Prevent highlighting text behind
+            touchAction: "none" // Prevent scrolling on mobile
         }}>
             <div style={{
                 textAlign: "center", 
                 backgroundColor: "#202327", 
                 padding: "2rem", 
                 borderRadius: "8px",
-                border: "1px solid #333",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.5)"
+                border: "1px solid #444",
+                boxShadow: "0 0 50px rgba(0,0,0,0.9)", // massive shadow to cover edges
+                maxWidth: "400px",
+                width: "90%"
             }}>
-                <h2 style={{marginTop: 0, marginBottom: "1rem"}}>🔒 Protected Site</h2>
-                <p style={{marginBottom: "1rem", color: "#aaa"}}>Please enter the password to view this content.</p>
+                <h2 style={{marginTop: 0, marginBottom: "1rem", color: "#fff"}}>🔒 Restricted Access</h2>
+                <p style={{marginBottom: "1rem", color: "#ccc"}}>
+                  This site is password protected.
+                </p>
                 
                 <input type="password" id="password-input" placeholder="Enter Password" style={{
-                    padding: "10px",
+                    padding: "12px",
                     borderRadius: "4px",
-                    border: "1px solid #444",
-                    backgroundColor: "#161618",
+                    border: "1px solid #555",
+                    backgroundColor: "#111",
                     color: "white",
-                    marginRight: "10px",
-                    outline: "none"
+                    marginRight: "0",
+                    marginBottom: "10px",
+                    width: "100%",
+                    outline: "none",
+                    fontSize: "1rem"
                 }}/>
                 
                 <button id="password-submit" style={{
-                    padding: "10px 20px",
+                    width: "100%",
+                    padding: "12px",
                     borderRadius: "4px",
                     border: "none",
-                    backgroundColor: "#3a6ea5", // Blue accent color
+                    backgroundColor: "#3a6ea5",
                     color: "white",
                     fontWeight: "bold",
-                    cursor: "pointer"
-                }}>Enter</button>
+                    fontSize: "1rem",
+                    cursor: "pointer",
+                    marginTop: "5px"
+                }}>Unlock Site</button>
                 
-                <p id="error-msg" style={{color: "#ff6b6b", marginTop: "1rem", display: "none", fontSize: "0.9rem"}}>
-                    Incorrect password. Try again.
+                <p id="error-msg" style={{color: "#ff6b6b", marginTop: "1rem", display: "none"}}>
+                    Incorrect password.
                 </p>
             </div>
         </div>
 
-        {/* --- PASSWORD LOGIC SCRIPT --- */}
+        {/* --- LOGIC SCRIPT --- */}
         <script dangerouslySetInnerHTML={{ __html: `
         (function() {
             // ==========================================
             // 👇 CHANGE YOUR PASSWORD HERE 👇
             // ==========================================
-            const correctPassword = "kitten"; 
-            
+            const correctPassword = "YOUR_PASSWORD_HERE"; 
             // ==========================================
 
             const lock = document.getElementById('site-lock');
@@ -94,34 +103,68 @@ export default ((opts?: FooterOptions) => {
             const input = document.getElementById('password-input');
             const errorMsg = document.getElementById('error-msg');
 
-            // 1. Check if user already entered the password previously (Session Storage)
-            if (sessionStorage.getItem('auth_token') === correctPassword) {
-                if(lock) lock.style.display = 'none';
+            // Function to lock scrolling
+            function disableScroll() {
+                document.body.style.overflow = "hidden";
+                document.body.style.height = "100vh";
             }
 
-            // 2. Function to validate password
+            // Function to unlock scrolling
+            function enableScroll() {
+                document.body.style.overflow = "";
+                document.body.style.height = "";
+            }
+
+            // 1. Initial Check
+            if (sessionStorage.getItem('auth_token') === correctPassword) {
+                if(lock) lock.style.display = 'none';
+                enableScroll();
+            } else {
+                // Force lock if not authenticated
+                if(lock) lock.style.display = 'flex';
+                disableScroll();
+            }
+
+            // 2. Validate Password
             function checkPass() {
                 if (input.value === correctPassword) {
-                    // Save access for this session
                     sessionStorage.setItem('auth_token', correctPassword);
-                    // Hide the lock screen
                     lock.style.display = 'none';
+                    enableScroll();
                 } else {
-                    // Show error
                     if(errorMsg) errorMsg.style.display = 'block';
                     input.value = "";
+                    // Shake animation effect
+                    input.style.borderColor = "red";
+                    setTimeout(() => input.style.borderColor = "#555", 500);
                 }
             }
 
-            // 3. Attach Event Listeners
+            // 3. Listeners
             if(btn) btn.onclick = checkPass;
-            
             if(input) input.addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
                     event.preventDefault();
                     checkPass();
                 }
             });
+
+            // 4. Trap Focus & Prevent "Flipping" (Aggressive)
+            // If the lock is visible, stop specific key presses
+            document.addEventListener('keydown', function(e) {
+                if (lock && lock.style.display !== 'none') {
+                    // Prevent generic keys, allow typing in input
+                    if (e.target !== input) {
+                        // Allow F5/Refresh, but block other navigation
+                        if (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === " " || e.key === "j" || e.key === "k") {
+                           e.stopPropagation();
+                           // optional: e.preventDefault(); 
+                        }
+                        input.focus();
+                    }
+                }
+            });
+
         })();
         `}} />
       </footer>
