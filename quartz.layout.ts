@@ -63,7 +63,7 @@ export const defaultListPageLayout: PageLayout = {
   beforeBody: [
     Component.Breadcrumbs(), 
     Component.ArticleTitle(),
-    // Component.ContentMeta() <-- REMOVED (Can cause crashes if your version is old)
+    // Component.ContentMeta() <-- REMOVED (Safe for older versions)
   ],
   left: [
     Component.PageTitle(),
@@ -95,8 +95,8 @@ export const defaultListPageLayout: PageLayout = {
   ],
   right: [],
   afterBody: [
-    // This component is required for lists to show up.
-    // IF BUILD FAILS HERE: It means quartz/components/PageList.tsx has a syntax error.
-    Component.PageList(),
+    // REMOVED Component.PageList() here.
+    // Quartz automatically renders the file list for folders using the "FolderContent" page type.
+    // Adding it here manually causes the "duplicate list of everything" bug.
   ],
 }
