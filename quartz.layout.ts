@@ -1,20 +1,60 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 
-// components shared across all pages
+// 1. SHARED COMPONENTS
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
   afterBody: [],
   footer: Component.Footer({
     links: {
-    //  "Kaushar Mahetaji": "https://kausharmahetaji.com",
-    //  "Discord Community": "",
+      // Add your links here
     },
   }),
 }
 
-// components for pages that display a single page (e.g. a single note)
+// 2. HOME PAGE LAYOUT
+export const defaultHomePageLayout: PageLayout = {
+  beforeBody: [
+    Component.ArticleTitle(),
+    Component.ContentMeta(),
+  ],
+  left: [
+    Component.PageTitle(),
+    Component.MobileOnly(Component.Spacer()),
+    Component.Flex({
+      components: [
+        {
+          Component: Component.Search(),
+          grow: true,
+        },
+      ],
+    }),
+    // ADDED: The "About" link (defined in HomeLink.tsx)
+    Component.HomeLink(), 
+    Component.Explorer({
+      title: "Contents",
+      useSavedState: false,
+      filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
+      sortFn: (a, b) => {
+        const aIsFolder = a.children.length > 0
+        const bIsFolder = b.children.length > 0
+        if (!aIsFolder && bIsFolder) return -1
+        if (aIsFolder && !bIsFolder) return 1
+        return a.displayName.localeCompare(b.displayName, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
+      },
+    }),
+  ],
+  right: [
+    Component.DesktopOnly(Component.TableOfContents()),
+    Component.Backlinks(),
+  ],
+}
+
+// 3. CONTENT PAGE LAYOUT (Single Notes)
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
     Component.ConditionalRender({
@@ -35,10 +75,11 @@ export const defaultContentPageLayout: PageLayout = {
         },
       ],
     }),
+    // ADDED: The "About" link
+    Component.HomeLink(),
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // FILTER: Hides "glossary" (lowercase) and "Glossary" (capitalized) from sidebar
       filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
@@ -58,12 +99,11 @@ export const defaultContentPageLayout: PageLayout = {
   ],
 }
 
-// components for pages that display lists of pages (e.g. tags or folders)
+// 4. LIST PAGE LAYOUT (Folders/Tags)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [
     Component.Breadcrumbs(), 
     Component.ArticleTitle(),
-    // Component.ContentMeta() <-- REMOVED (Safe for older versions)
   ],
   left: [
     Component.PageTitle(),
@@ -76,10 +116,11 @@ export const defaultListPageLayout: PageLayout = {
         },
       ],
     }),
+    // ADDED: The "About" link
+    Component.HomeLink(),
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // FILTER: Same filter as above
       filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
@@ -94,9 +135,5 @@ export const defaultListPageLayout: PageLayout = {
     }),
   ],
   right: [],
-  afterBody: [
-    // REMOVED Component.PageList() here.
-    // Quartz automatically renders the file list for folders using the "FolderContent" page type.
-    // Adding it here manually causes the "duplicate list of everything" bug.
-  ],
+  afterBody: [],
 }
