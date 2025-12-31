@@ -49,3 +49,8 @@ a.internal:hover {
   padding: 0 2px;                     /* Adds a tiny bit of breathing room */
   transition: background-color 0.2s;  /* Makes the color fade in smoothly */
 }
+
+/* Change the color of the main Note Title (Frontmatter Title) */
+.article-title {
+  color: #89b4fa; /* Gentle Blue */
+}
