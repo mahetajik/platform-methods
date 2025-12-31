@@ -11,7 +11,7 @@ const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzCompo
     <div class={classNames(displayClass, "page-title")}>
       <a href={baseDir}>
         <h1>{title}</h1>
-        <p class="page-subtitle">Data and Methods</p>
+        <p class="page-subtitle">Frameworks, Data + Methods</p>
       </a>
     </div>
   )
