@@ -1,4 +1,4 @@
 ---
-title: Platform
+title: platform
 ---
 Definition of a platform...
