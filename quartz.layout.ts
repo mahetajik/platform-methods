@@ -9,7 +9,7 @@ export const sharedPageComponents: SharedLayout = {
   footer: Component.Footer({
     links: {
     //  "Kaushar Mahetaji": "https://kausharmahetaji.com",
-   //   "Discord Community": "",
+    //  "Discord Community": "",
     },
   }),
 }
@@ -33,14 +33,13 @@ export const defaultContentPageLayout: PageLayout = {
           Component: Component.Search(),
           grow: true,
         },
-        // Component.Darkmode() removed
       ],
     }),
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // UPDATED: This line filters out the "glossary" folder from the menu
-      filterFn: (node) => node.name !== "glossary",
+      // FILTER: Hides "glossary" (lowercase) and "Glossary" (capitalized) from sidebar
+      filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
         const bIsFolder = b.children.length > 0
@@ -64,6 +63,7 @@ export const defaultListPageLayout: PageLayout = {
   beforeBody: [
     Component.Breadcrumbs(), 
     Component.ArticleTitle(),
+    // Component.ContentMeta() <-- REMOVED (Safe for older versions)
   ],
   left: [
     Component.PageTitle(),
@@ -74,14 +74,13 @@ export const defaultListPageLayout: PageLayout = {
           Component: Component.Search(),
           grow: true,
         },
-        // Component.Darkmode() removed
       ],
     }),
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // UPDATED: This line filters out the "glossary" folder from the menu
-      filterFn: (node) => node.name !== "glossary",
+      // FILTER: Same filter as above
+      filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
         const bIsFolder = b.children.length > 0
@@ -95,4 +94,9 @@ export const defaultListPageLayout: PageLayout = {
     }),
   ],
   right: [],
+  afterBody: [
+    // REMOVED Component.PageList() here.
+    // Quartz automatically renders the file list for folders using the "FolderContent" page type.
+    // Adding it here manually causes the "duplicate list of everything" bug.
+  ],
 }
