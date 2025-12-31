@@ -33,13 +33,12 @@ export const defaultContentPageLayout: PageLayout = {
           Component: Component.Search(),
           grow: true,
         },
-        // Component.Darkmode() removed
       ],
     }),
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // FIX: Check for both lowercase "glossary" and capitalized "Glossary"
+      // FILTER: Hides "glossary" (lowercase) and "Glossary" (capitalized) from sidebar
       filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
@@ -64,7 +63,7 @@ export const defaultListPageLayout: PageLayout = {
   beforeBody: [
     Component.Breadcrumbs(), 
     Component.ArticleTitle(),
-    Component.ContentMeta(), // Recommended: Shows count of pages
+    // Component.ContentMeta() <-- REMOVED (Can cause crashes if your version is old)
   ],
   left: [
     Component.PageTitle(),
@@ -75,13 +74,12 @@ export const defaultListPageLayout: PageLayout = {
           Component: Component.Search(),
           grow: true,
         },
-        // Component.Darkmode() removed
       ],
     }),
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // FIX: Check for both lowercase "glossary" and capitalized "Glossary"
+      // FILTER: Same filter as above
       filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
@@ -96,8 +94,9 @@ export const defaultListPageLayout: PageLayout = {
     }),
   ],
   right: [],
-  // FIX: Added PageList here. Without this, folder/tag pages are empty.
   afterBody: [
+    // This component is required for lists to show up.
+    // IF BUILD FAILS HERE: It means quartz/components/PageList.tsx has a syntax error.
     Component.PageList(),
   ],
 }
