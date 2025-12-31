@@ -62,26 +62,38 @@ a.internal:hover {
   /* This ensures the text is readable on the blue background even in dark mode */
 }
 
-/* Fix Folder Page List Alignment */
+/* --- Widen the Center Column --- */
+.page {
+  max-width: 1000px !important; /* Default is ~750px. Try 1000px or 1200px */
+  width: 100%;
+}
+
+/* Optional: Adjust for mobile so it doesn't break on phones */
+@media (max-width: 800px) {
+  .page {
+    max-width: 90% !important;
+  }
+}
+
+/* --- Fix Folder List Splitting --- */
 .section-list > li {
   display: flex !important;
   flex-direction: row !important;
-  flex-wrap: nowrap !important; /* Forces single line layout */
-  align-items: baseline; 
-  gap: 1rem; /* Space between the 1.1 and the Title */
+  flex-wrap: nowrap !important; /* strictly forbids wrapping to a new line */
+  align-items: baseline;
+  gap: 1rem;
 }
 
-/* Ensure the '1.1' (meta) stays fixed width and doesn't wrap */
+/* 1. The Number (Meta) - Keep it fixed */
 .section-list > li > .section-li-info {
-  flex-shrink: 0; /* Prevents the number from getting squashed */
-  white-space: nowrap;
-  min-width: fit-content;
-  color: var(--darkgray);
+  flex-shrink: 0; /* Never let the number shrink/squish */
+  white-space: nowrap; /* Never let the number wrap */
+  width: auto;
 }
 
-/* Ensure the Title takes available space and wraps TEXT properly, not the whole block */
+/* 2. The Title - Let it take remaining space */
 .section-list > li > .internal {
   flex-grow: 1;
-  min-width: 0; /* Crucial for CSS Grid/Flex text wrapping */
-  display: block; /* Ensures text behaves like text */
+  display: inline-block; 
+  min-width: 0; /* Allow text to wrap INSIDE the title box, not PUSH the box down */
 }
