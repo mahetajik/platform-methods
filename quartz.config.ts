@@ -16,6 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
+    // ✅ This is correct. Do not change it.
     baseUrl: "mahetajik.github.io/platform-methods",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
@@ -29,17 +30,16 @@ const config: QuartzConfig = {
       },
       colors: {
         lightMode: {
-          light: "#f7f4ed",      // UPDATED: Lighter shade of beige
+          light: "#f7f4ed",
           lightgray: "#e5e5e5",
           gray: "#000000",
           darkgray: "#000000",
-          dark: "#101419",       // UPDATED: Very dark navy-black for text
-          secondary: "#1a3a6e",  // UPDATED: Blue slightly lighter than #001f4e
+          dark: "#101419",
+          secondary: "#1a3a6e",
           tertiary: "#84a59d",
           highlight: "rgba(143, 159, 169, 0.15)",
           textHighlight: "#fff23688",
         },
-        // Force Light Mode colors in Dark Mode (as requested previously)
         darkMode: {
           light: "#f7f4ed",
           lightgray: "#e5e5e5",
@@ -74,7 +74,12 @@ const config: QuartzConfig = {
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
     ],
-    filters: [Plugin.RemoveDrafts()],
+    filters: [
+      // ⬇️ COMMENTED OUT TO FIX 404 ERRORS
+      // If a file is accidentally marked as draft, this hides it.
+      // Disabling this forces all files to show up.
+      // Plugin.RemoveDrafts() 
+    ],
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
