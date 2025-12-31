@@ -3,18 +3,28 @@ import * as Component from "./quartz/components"
 
 // --- CONFIGURATION START ---
 
-// Define the Explorer component ONCE here with the filter
+// Define the Explorer component ONCE here with the aggressive filter
 const explorerComponent = Component.Explorer({
   title: "Contents",
   useSavedState: false, 
   
-  // FILTER FUNCTION: Hides specific folders from the sidebar
+  // NUCLEAR FILTER FUNCTION: Aggressively hides glossary
   filterFn: (node) => {
-    const name = node.name ? node.name.toLowerCase() : ""
-    
-    // Hide "tags" and "glossary" from the menu
+    // 1. Get all possible names (safe check with lowercase)
+    const name = node.name?.toLowerCase() ?? ""
+    const displayName = node.displayName?.toLowerCase() ?? ""
+    const path = node.file?.slug?.toLowerCase() ?? ""
+
+    // 2. Hide "tags"
     if (name === "tags") return false
-    if (name.includes("glossary")) return false
+
+    // 3. Hide "glossary" (checks Folder Name, Title, and URL Path)
+    // This catches it even if the folder is named "folder" but titled "Glossary"
+    if (name.includes("glossary") || 
+        displayName.includes("glossary") || 
+        path.includes("glossary")) {
+      return false
+    }
     
     return true
   },
@@ -67,7 +77,7 @@ export const defaultHomePageLayout: PageLayout = {
         },
       ],
     }),
-    Component.HomeLink(), // ✅ Added back
+    Component.HomeLink(), // ✅ Kept your custom component
     explorerComponent, 
   ],
   right: [
@@ -97,7 +107,7 @@ export const defaultContentPageLayout: PageLayout = {
         },
       ],
     }),
-    Component.HomeLink(), // ✅ Added back
+    Component.HomeLink(), // ✅ Kept your custom component
     explorerComponent, 
   ],
   right: [
@@ -123,7 +133,7 @@ export const defaultListPageLayout: PageLayout = {
         },
       ],
     }),
-    Component.HomeLink(), // ✅ Added back
+    Component.HomeLink(), // ✅ Kept your custom component
     explorerComponent,
   ],
   right: [],
