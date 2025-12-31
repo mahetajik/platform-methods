@@ -61,3 +61,27 @@ a.internal:hover {
   /* Optional: Make it look consistent in Dark Mode */
   /* This ensures the text is readable on the blue background even in dark mode */
 }
+
+/* Fix Folder Page List Alignment */
+.section-list > li {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important; /* Forces single line layout */
+  align-items: baseline; 
+  gap: 1rem; /* Space between the 1.1 and the Title */
+}
+
+/* Ensure the '1.1' (meta) stays fixed width and doesn't wrap */
+.section-list > li > .section-li-info {
+  flex-shrink: 0; /* Prevents the number from getting squashed */
+  white-space: nowrap;
+  min-width: fit-content;
+  color: var(--darkgray);
+}
+
+/* Ensure the Title takes available space and wraps TEXT properly, not the whole block */
+.section-list > li > .internal {
+  flex-grow: 1;
+  min-width: 0; /* Crucial for CSS Grid/Flex text wrapping */
+  display: block; /* Ensures text behaves like text */
+}
