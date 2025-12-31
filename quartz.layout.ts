@@ -6,21 +6,39 @@ import * as Component from "./quartz/components"
 // Define the Explorer component ONCE here to ensure consistency across all pages
 const explorerComponent = Component.Explorer({
   title: "Contents",
-  // FIXED: Changed to 'true' so folders stay open when navigating
-  useSavedState: true, 
+  
+  // Set to false first to unfreeze your sidebar. 
+  // You can try setting it to true later, but clear your browser cache if you do!
+  useSavedState: false, 
+  
   // FIXED FILTER FUNCTION
   filterFn: (node) => {
-    // list of folders to hide (all lowercase)
-    const omit = new Set(["glossary", "tags"])
-    // check if the folder name (converted to lowercase) is in the omit list
-    return !omit.has(node.name.toLowerCase())
+    // 1. Safety check: ensure name exists
+    const name = node.name ? node.name.toLowerCase() : ""
+    
+    // 2. Hide exact matches for folder names
+    if (name === "glossary" || name === "tags") return false
+    
+    // 3. Hide file matches (e.g., "glossary.md")
+    if (name === "glossary.md") return false
+    
+    return true
   },
+  
+  // FIXED SORT FUNCTION (Prevents crashes)
   sortFn: (a, b) => {
     const aIsFolder = a.children.length > 0
     const bIsFolder = b.children.length > 0
+    
     if (!aIsFolder && bIsFolder) return -1
     if (aIsFolder && !bIsFolder) return 1
-    return a.displayName.localeCompare(b.displayName, undefined, {
+    
+    // Safety check: use displayName, fallback to name, fallback to empty string
+    // This prevents the "Nothing opening" bug
+    const aName = a.displayName || a.name || ""
+    const bName = b.displayName || b.name || ""
+    
+    return aName.localeCompare(bName, undefined, {
       numeric: true,
       sensitivity: "base",
     })
