@@ -24,106 +24,54 @@ export default ((opts?: FooterOptions) => {
           ))}
         </ul>
 
-        {/* --- PASSWORD PROTECTION TEMPLATE --- */}
-        <div id="site-lock-template" style={{ display: "none" }}>
-            <div id="site-lock-overlay" style={{
-                position: "fixed",
-                top: "0",
-                left: "0",
-                width: "100vw",
-                height: "100vh",
-                backgroundColor: "#000000",
-                zIndex: "2147483647", 
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-                <div style={{
-                    textAlign: "center", 
-                    backgroundColor: "#202327", 
-                    padding: "2rem", 
-                    borderRadius: "8px",
-                    border: "1px solid #444",
-                    boxShadow: "0 0 100px rgba(255,255,255,0.1)", 
-                    maxWidth: "400px",
-                    width: "90%"
-                }}>
-                    <h2 style={{marginTop: 0, marginBottom: "1rem", color: "#fff"}}>🔒 Restricted Access</h2>
-                    <p style={{marginBottom: "1rem", color: "#ccc"}}>
-                      Please enter the password.
-                    </p>
-                    
-                    <input type="password" id="password-input" placeholder="Password" style={{
-                        padding: "12px",
-                        borderRadius: "4px",
-                        border: "1px solid #555",
-                        backgroundColor: "#111",
-                        color: "white",
-                        marginBottom: "10px",
-                        width: "100%",
-                        fontSize: "16px"
-                    }}/>
-                    
-                    <button id="password-submit" style={{
-                        width: "100%",
-                        padding: "12px",
-                        borderRadius: "4px",
-                        border: "none",
-                        backgroundColor: "#3a6ea5",
-                        color: "white",
-                        fontWeight: "bold",
-                        cursor: "pointer",
-                        fontSize: "16px"
-                    }}>Unlock</button>
-                    
-                    <p id="error-msg" style={{color: "#ff6b6b", marginTop: "1rem", display: "none"}}>
-                        Incorrect password.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        {/* --- LOGIC SCRIPT --- */}
+        {/* --- PURE JS PASSWORD PROTECTION --- */}
+        {/* We do not use HTML templates anymore. We build it in the script. */}
         <script dangerouslySetInnerHTML={{ __html: `
         (function() {
             // ==========================================
-            // 👇 PASSWORD CONFIGURATION
+            // 👇 PASSWORD SETTING
             // ==========================================
             const correctPassword = "kitten"; 
             // ==========================================
 
-            function initLock() {
-                // 1. Check if unlocked
+            function checkLock() {
+                // 1. If already unlocked, ensure scroll is enabled and exit
                 if (localStorage.getItem('site_unlocked') === 'true') {
-                    const existing = document.getElementById('site-lock-overlay');
-                    if (existing) existing.remove();
-                    document.body.style.overflow = "";
+                    document.body.style.overflow = ""; 
                     return; 
                 }
 
-                // 2. Check if lock is already active
+                // 2. If lock already exists, don't create another one
                 if (document.getElementById('site-lock-overlay')) return;
 
-                // 3. Find template (With Retry Logic)
-                const template = document.getElementById('site-lock-template');
-                if (!template) {
-                    // If not found, wait 50ms and try again
-                    setTimeout(initLock, 50);
-                    return;
-                }
+                // 3. CREATE THE LOCK SCREEN (Pure JS)
+                const overlay = document.createElement('div');
+                overlay.id = 'site-lock-overlay';
+                
+                // Styling (Dark Mode, Fixed Position, Max Z-Index)
+                overlay.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background-color:#000000; z-index:2147483647; display:flex; flex-direction:column; align-items:center; justify-content:center; touch-action:none;";
 
-                // 4. Activate Lock
-                const overlay = template.firstElementChild.cloneNode(true);
+                // Inner HTML (The Box)
+                overlay.innerHTML = \`
+                    <div style="text-align:center; background-color:#202327; padding:2rem; border-radius:8px; border:1px solid #444; box-shadow:0 0 100px rgba(255,255,255,0.1); max-width:400px; width:90%; font-family:sans-serif;">
+                        <h2 style="margin-top:0; margin-bottom:1rem; color:#fff;">🔒 Restricted Access</h2>
+                        <p style="margin-bottom:1rem; color:#ccc;">Please enter the password.</p>
+                        <input type="password" id="password-input" placeholder="Password" style="padding:12px; border-radius:4px; border:1px solid #555; background-color:#111; color:white; margin-bottom:10px; width:100%; font-size:16px; box-sizing:border-box;">
+                        <button id="password-submit" style="width:100%; padding:12px; border-radius:4px; border:none; background-color:#3a6ea5; color:white; font-weight:bold; cursor:pointer; font-size:16px;">Unlock</button>
+                        <p id="error-msg" style="color:#ff6b6b; margin-top:1rem; display:none;">Incorrect password.</p>
+                    </div>
+                \`;
+
+                // 4. Inject into Body
                 document.body.appendChild(overlay);
-                document.body.style.overflow = "hidden";
+                document.body.style.overflow = "hidden"; // Freeze scrolling
 
-                // 5. Setup Events
-                const btn = overlay.querySelector('#password-submit');
-                const input = overlay.querySelector('#password-input');
-                const errorMsg = overlay.querySelector('#error-msg');
+                // 5. Add Event Listeners
+                const btn = document.getElementById('password-submit');
+                const input = document.getElementById('password-input');
+                const errorMsg = document.getElementById('error-msg');
 
-                function checkPass() {
+                function validate() {
                     if (input.value === correctPassword) {
                         localStorage.setItem('site_unlocked', 'true');
                         overlay.remove();
@@ -135,22 +83,24 @@ export default ((opts?: FooterOptions) => {
                     }
                 }
 
-                btn.onclick = checkPass;
-                input.addEventListener("keypress", function(event) {
-                    if (event.key === "Enter") {
-                        event.preventDefault();
-                        checkPass();
-                    }
-                });
-                
-                setTimeout(() => input.focus(), 100);
+                if (btn) btn.onclick = validate;
+                if (input) {
+                    input.addEventListener("keypress", function(event) {
+                        if (event.key === "Enter") {
+                            event.preventDefault();
+                            validate();
+                        }
+                    });
+                    // Focus immediately
+                    setTimeout(() => input.focus(), 100);
+                }
             }
 
-            // Run immediately
-            initLock();
+            // Run Immediately
+            checkLock();
 
-            // Handle Quartz Navigation
-            document.addEventListener('nav', () => setTimeout(initLock, 50));
+            // Run on Page Navigation (Quartz SPA)
+            document.addEventListener('nav', checkLock);
         })();
         `}} />
       </footer>
