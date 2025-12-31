@@ -23,7 +23,8 @@ import Breadcrumbs from "./Breadcrumbs"
 import Comments from "./Comments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
-import PageList from "./PageList" // <--- ADDED THIS IMPORT
+import PageList from "./PageList"
+import HomeLink from "./HomeLink" // <--- Import is here now
 
 export {
   ArticleTitle,
@@ -51,15 +52,6 @@ export {
   Comments,
   Flex,
   ConditionalRender,
-  PageList, // <--- ADDED THIS EXPORT
-}
-
-// 1. Add this to the imports at the top
-import HomeLink from "./HomeLink"
-
-// 2. Add this to the export list at the bottom
-export {
-  // ... other components ...
   PageList,
-  HomeLink, // <--- Add this
+  HomeLink, // <--- Export is here now
 }
