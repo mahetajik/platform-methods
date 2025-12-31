@@ -50,7 +50,14 @@ a.internal:hover {
   transition: background-color 0.2s;  /* Makes the color fade in smoothly */
 }
 
-/* Change the color of the main Note Title (Frontmatter Title) */
+/* Blue Highlighter Effect for Titles */
 .article-title {
-  color: #89b4fa; /* Gentle Blue */
+  color: black !important;      /* Keeps the text black */
+  background-color: #c3cad9;    /* Gentle Blue background color */
+  width: fit-content;           /* Highlight ONLY the text, not the whole line */
+  padding: 0.1em 0.4em;         /* Adds a tiny bit of breathing room */
+  border-radius: 6px;           /* Rounds the corners of the highlight */
+  
+  /* Optional: Make it look consistent in Dark Mode */
+  /* This ensures the text is readable on the blue background even in dark mode */
 }
