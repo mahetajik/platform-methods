@@ -75,25 +75,37 @@ a.internal:hover {
   }
 }
 
-/* --- Fix Folder List Splitting --- */
+/* =============================================== */
+/* 2. FORCE FOLDER LIST TO STAY ON ONE LINE        */
+/* =============================================== */
+/* Target the list items specifically */
 .section-list > li {
   display: flex !important;
   flex-direction: row !important;
-  flex-wrap: nowrap !important; /* strictly forbids wrapping to a new line */
-  align-items: baseline;
-  gap: 1rem;
+  flex-wrap: nowrap !important; /* STRICTLY forbid wrapping */
+  align-items: baseline !important;
+  gap: 1.5rem; /* Add clear space between number and title */
+  margin-bottom: 0.5rem;
 }
 
-/* 1. The Number (Meta) - Keep it fixed */
+/* Fix the "Number" or "Date" (Meta info) */
 .section-list > li > .section-li-info {
-  flex-shrink: 0; /* Never let the number shrink/squish */
-  white-space: nowrap; /* Never let the number wrap */
-  width: auto;
+  flex: 0 0 auto !important; /* Do not grow, do not shrink */
+  width: auto !important;
+  min-width: fit-content;
+  white-space: nowrap !important; /* Keep "1.1" on one line */
+  margin: 0 !important;
 }
 
-/* 2. The Title - Let it take remaining space */
+/* Fix the Title (Link) */
 .section-list > li > .internal {
-  flex-grow: 1;
-  display: inline-block; 
-  min-width: 0; /* Allow text to wrap INSIDE the title box, not PUSH the box down */
+  flex: 1 1 auto !important; /* Take up all remaining space */
+  min-width: 0 !important; /* Allow text to wrap naturally INSIDE the block */
+  display: block !important;
+}
+
+/* Optional: Hide the default bullet point if it's getting in the way */
+.section-list {
+  list-style: none !important;
+  padding-left: 0 !important;
 }
