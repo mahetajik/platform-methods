@@ -1,6 +1,6 @@
 import { FullSlug, resolveRelative } from "../util/path"
 import { QuartzPluginData } from "../plugins/vfile"
-import { Date, getDate } from "./Date"  // <--- FIXED: Reverted to named import
+import { Date, getDate } from "./Date"
 import { QuartzComponent, QuartzComponentProps } from "./types"
 import { GlobalConfiguration } from "../cfg"
 
@@ -23,7 +23,7 @@ export function byDateAndAlphabetical(cfg: GlobalConfiguration): SortFn {
 
 export function byDateAndAlphabeticalFolderFirst(cfg: GlobalConfiguration): SortFn {
   return (f1, f2) => {
-    // FIX: Replaced broken "isFolderPath" with manual check
+    // FIX: Manual check for "index.md" to identify folders
     const f1IsFolder = f1.filePath?.endsWith("index.md")
     const f2IsFolder = f2.filePath?.endsWith("index.md")
 
