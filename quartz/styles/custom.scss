@@ -40,3 +40,12 @@ div[data-folderpath="glossary"],
 div[data-folderpath="Glossary"] {
     display: none !important;
 }
+
+/* Highlight links with a darker background on hover */
+a.internal:hover {
+  background-color: var(--lightgray); /* Uses your config's darker beige/gray */
+  border-radius: 4px;                 /* Rounds the corners slightly */
+  text-decoration: none;              /* Removes the underline for a cleaner look */
+  padding: 0 2px;                     /* Adds a tiny bit of breathing room */
+  transition: background-color 0.2s;  /* Makes the color fade in smoothly */
+}
