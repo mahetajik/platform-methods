@@ -63,7 +63,7 @@ export const defaultListPageLayout: PageLayout = {
   beforeBody: [
     Component.Breadcrumbs(), 
     Component.ArticleTitle(),
-    // Component.ContentMeta() <-- REMOVED (Safe for older versions)
+    // Component.ContentMeta() <-- REMOVED (Can cause crashes if your version is old)
   ],
   left: [
     Component.PageTitle(),
@@ -79,7 +79,7 @@ export const defaultListPageLayout: PageLayout = {
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // FILTER: Same filter as above
+      // FILTER: Same filter as above to keep consistency on all pages
       filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
@@ -95,8 +95,8 @@ export const defaultListPageLayout: PageLayout = {
   ],
   right: [],
   afterBody: [
-    // REMOVED Component.PageList() here.
-    // Quartz automatically renders the file list for folders using the "FolderContent" page type.
-    // Adding it here manually causes the "duplicate list of everything" bug.
+    // KEEP THIS EMPTY.
+    // Quartz automatically renders the correct list of files for the specific folder
+    // using the built-in "FolderContent" component.
   ],
 }
