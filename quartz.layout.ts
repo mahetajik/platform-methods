@@ -1,6 +1,33 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 
+// --- CONFIGURATION START ---
+
+// Define the Explorer component ONCE here to ensure consistency across all pages
+const explorerComponent = Component.Explorer({
+  title: "Contents",
+  useSavedState: false,
+  // FIXED FILTER FUNCTION
+  filterFn: (node) => {
+    // list of folders to hide (all lowercase)
+    const omit = new Set(["glossary", "tags"])
+    // check if the folder name (converted to lowercase) is in the omit list
+    return !omit.has(node.name.toLowerCase())
+  },
+  sortFn: (a, b) => {
+    const aIsFolder = a.children.length > 0
+    const bIsFolder = b.children.length > 0
+    if (!aIsFolder && bIsFolder) return -1
+    if (aIsFolder && !bIsFolder) return 1
+    return a.displayName.localeCompare(b.displayName, undefined, {
+      numeric: true,
+      sensitivity: "base",
+    })
+  },
+})
+
+// --- CONFIGURATION END ---
+
 // 1. SHARED COMPONENTS
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
@@ -30,23 +57,8 @@ export const defaultHomePageLayout: PageLayout = {
         },
       ],
     }),
-    // ADDED: The "About" link (defined in HomeLink.tsx)
     Component.HomeLink(), 
-    Component.Explorer({
-      title: "Contents",
-      useSavedState: false,
-      filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
-      sortFn: (a, b) => {
-        const aIsFolder = a.children.length > 0
-        const bIsFolder = b.children.length > 0
-        if (!aIsFolder && bIsFolder) return -1
-        if (aIsFolder && !bIsFolder) return 1
-        return a.displayName.localeCompare(b.displayName, undefined, {
-          numeric: true,
-          sensitivity: "base",
-        })
-      },
-    }),
+    explorerComponent, // <--- Using the unified explorer here
   ],
   right: [
     Component.DesktopOnly(Component.TableOfContents()),
@@ -75,23 +87,8 @@ export const defaultContentPageLayout: PageLayout = {
         },
       ],
     }),
-    // ADDED: The "About" link
     Component.HomeLink(),
-    Component.Explorer({
-      title: "Contents",
-      useSavedState: false,
-      filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
-      sortFn: (a, b) => {
-        const aIsFolder = a.children.length > 0
-        const bIsFolder = b.children.length > 0
-        if (!aIsFolder && bIsFolder) return -1
-        if (aIsFolder && !bIsFolder) return 1
-        return a.displayName.localeCompare(b.displayName, undefined, {
-          numeric: true,
-          sensitivity: "base",
-        })
-      },
-    }),
+    explorerComponent, // <--- Using the unified explorer here
   ],
   right: [
     Component.DesktopOnly(Component.TableOfContents()),
@@ -116,23 +113,8 @@ export const defaultListPageLayout: PageLayout = {
         },
       ],
     }),
-    // ADDED: The "About" link
     Component.HomeLink(),
-    Component.Explorer({
-      title: "Contents",
-      useSavedState: false,
-      filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
-      sortFn: (a, b) => {
-        const aIsFolder = a.children.length > 0
-        const bIsFolder = b.children.length > 0
-        if (!aIsFolder && bIsFolder) return -1
-        if (aIsFolder && !bIsFolder) return 1
-        return a.displayName.localeCompare(b.displayName, undefined, {
-          numeric: true,
-          sensitivity: "base",
-        })
-      },
-    }),
+    explorerComponent, // <--- Using the unified explorer here
   ],
   right: [],
   afterBody: [],
