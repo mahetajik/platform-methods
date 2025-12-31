@@ -53,3 +53,13 @@ export {
   ConditionalRender,
   PageList, // <--- ADDED THIS EXPORT
 }
+
+// 1. Add this to the imports at the top
+import HomeLink from "./HomeLink"
+
+// 2. Add this to the export list at the bottom
+export {
+  // ... other components ...
+  PageList,
+  HomeLink, // <--- Add this
+}
