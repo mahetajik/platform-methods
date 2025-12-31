@@ -1,5 +1,5 @@
 ---
-title: About Me and My Work on Platform Tools and Platform Power
+title: Kaushar Mahetaji
 subtitle:
 ---
 # About Me 
@@ -7,4 +7,4 @@ I am a PhD candidate and course instructor at the [Faculty of Information](http
 
 I am a 2024-2026 Junior Fellow at [Massey College](https://www.masseycollege.ca/) and a 2025-2026 Graduate Fellow at the [Schwartz Reisman Institute](https://srinstitute.utoronto.ca/). My research is funded by a Doctoral Award from the [Social Sciences and Humanities Research Council](https://www.sshrc-crsh.gc.ca/home-accueil-eng.aspx) (SSHRC).
 
-
+# About Platform Tools and Platform Power
