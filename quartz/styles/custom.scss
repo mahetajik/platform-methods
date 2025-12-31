@@ -23,3 +23,8 @@
 .section-li .section .desc {
   margin-top: 0 !important;
 }
+
+/* Prevent wrapping in Page Lists */
+.section-li > .section {
+  white-space: nowrap;
+}
