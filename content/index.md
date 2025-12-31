@@ -1,5 +1,5 @@
 ---
-title: Researching Platform Tools and Platform Power
+title: About Me and My Work on Platform Tools and Platform Power
 subtitle:
 ---
 > What are platform tools? 
