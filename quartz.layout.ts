@@ -6,7 +6,8 @@ import * as Component from "./quartz/components"
 // Define the Explorer component ONCE here to ensure consistency across all pages
 const explorerComponent = Component.Explorer({
   title: "Contents",
-  useSavedState: false,
+  // FIXED: Changed to 'true' so folders stay open when navigating
+  useSavedState: true, 
   // FIXED FILTER FUNCTION
   filterFn: (node) => {
     // list of folders to hide (all lowercase)
