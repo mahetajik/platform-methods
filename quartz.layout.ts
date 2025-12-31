@@ -7,20 +7,21 @@ import * as Component from "./quartz/components"
 const explorerComponent = Component.Explorer({
   title: "Contents",
   
-  // Set to false first to unfreeze your sidebar. 
-  // You can try setting it to true later, but clear your browser cache if you do!
+  // Keep as false to ensure the sidebar doesn't freeze/crash
   useSavedState: false, 
   
-  // FIXED FILTER FUNCTION
+  // NUCLEAR FILTER FUNCTION
   filterFn: (node) => {
-    // 1. Safety check: ensure name exists
+    // 1. Safety check: ensure name exists and make it lowercase
     const name = node.name ? node.name.toLowerCase() : ""
     
-    // 2. Hide exact matches for folder names
-    if (name === "glossary" || name === "tags") return false
+    // 2. Hide "tags" specifically
+    if (name === "tags") return false
     
-    // 3. Hide file matches (e.g., "glossary.md")
-    if (name === "glossary.md") return false
+    // 3. THE WILDCARD FIX: 
+    // This hides ANY folder or file that contains the word "glossary"
+    // Examples hidden: "glossary", "Glossary", "glossary.md", "my-glossary"
+    if (name.includes("glossary")) return false
     
     return true
   },
@@ -34,7 +35,6 @@ const explorerComponent = Component.Explorer({
     if (aIsFolder && !bIsFolder) return 1
     
     // Safety check: use displayName, fallback to name, fallback to empty string
-    // This prevents the "Nothing opening" bug
     const aName = a.displayName || a.name || ""
     const bName = b.displayName || b.name || ""
     
