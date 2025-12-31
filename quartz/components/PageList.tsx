@@ -1,6 +1,7 @@
 import { FullSlug, resolveRelative } from "../util/path"
 import { QuartzPluginData } from "../plugins/vfile"
-import { Date, getDate } from "./Date"
+// REVERTED TO YOUR ORIGINAL IMPORT STYLE
+import { Date, getDate } from "./Date" 
 import { QuartzComponent, QuartzComponentProps } from "./types"
 import { GlobalConfiguration } from "../cfg"
 
@@ -23,8 +24,7 @@ export function byDateAndAlphabetical(cfg: GlobalConfiguration): SortFn {
 
 export function byDateAndAlphabeticalFolderFirst(cfg: GlobalConfiguration): SortFn {
   return (f1, f2) => {
-    // FIX: Check if it's a folder by looking for "index.md" 
-    // (Standard Quartz doesn't have isFolderPath)
+    // FIX: Using manual check because isFolderPath is missing in your version
     const f1IsFolder = f1.filePath?.endsWith("index.md")
     const f2IsFolder = f2.filePath?.endsWith("index.md")
 
@@ -105,5 +105,5 @@ PageList.css = `
 }
 `
 
-// FIX: This line was missing! It is required for the build to work.
+// CRITICAL: This export is required for the layout to find the component
 export default (() => PageList)
