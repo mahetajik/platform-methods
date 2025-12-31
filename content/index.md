@@ -4,6 +4,6 @@ subtitle:
 ---
 > What are platform tools? 
 
-This is a test for the term **[[glossary/platform-test.md|platform]]
+This is a test for the term **[[platform-test|platform]]
 
 
