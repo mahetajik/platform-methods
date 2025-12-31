@@ -24,68 +24,65 @@ export default ((opts?: FooterOptions) => {
           ))}
         </ul>
 
-        {/* --- NUCLEAR PASSWORD PROTECTION --- */}
-        <div id="site-lock" style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "#161618", // Hardcoded dark color
-            backgroundImage: "linear-gradient(to bottom, #161618, #000000)", // Double layer to ensure opacity
-            zIndex: "2147483647", // Maximum CSS value (32-bit integer)
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "default", // Stop cursor interaction with background
-            userSelect: "none", // Prevent highlighting text behind
-            touchAction: "none" // Prevent scrolling on mobile
-        }}>
-            <div style={{
-                textAlign: "center", 
-                backgroundColor: "#202327", 
-                padding: "2rem", 
-                borderRadius: "8px",
-                border: "1px solid #444",
-                boxShadow: "0 0 50px rgba(0,0,0,0.9)", // massive shadow to cover edges
-                maxWidth: "400px",
-                width: "90%"
+        {/* --- PASSWORD PROTECTION COMPONENT --- */}
+        {/* We give it a unique ID so the script can find it */}
+        <div id="site-lock-template" style={{ display: "none" }}>
+            <div id="site-lock-overlay" style={{
+                position: "fixed",
+                top: "0",
+                left: "0",
+                width: "100vw",
+                height: "100vh",
+                backgroundColor: "#000000", /* Pure Black */
+                zIndex: "2147483647", /* Max Z-Index */
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                opacity: "1", /* Force Opaque */
             }}>
-                <h2 style={{marginTop: 0, marginBottom: "1rem", color: "#fff"}}>🔒 Restricted Access</h2>
-                <p style={{marginBottom: "1rem", color: "#ccc"}}>
-                  This site is password protected.
-                </p>
-                
-                <input type="password" id="password-input" placeholder="Enter Password" style={{
-                    padding: "12px",
-                    borderRadius: "4px",
-                    border: "1px solid #555",
-                    backgroundColor: "#111",
-                    color: "white",
-                    marginRight: "0",
-                    marginBottom: "10px",
-                    width: "100%",
-                    outline: "none",
-                    fontSize: "1rem"
-                }}/>
-                
-                <button id="password-submit" style={{
-                    width: "100%",
-                    padding: "12px",
-                    borderRadius: "4px",
-                    border: "none",
-                    backgroundColor: "#3a6ea5",
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    cursor: "pointer",
-                    marginTop: "5px"
-                }}>Unlock Site</button>
-                
-                <p id="error-msg" style={{color: "#ff6b6b", marginTop: "1rem", display: "none"}}>
-                    Incorrect password.
-                </p>
+                <div style={{
+                    textAlign: "center", 
+                    backgroundColor: "#202327", 
+                    padding: "2rem", 
+                    borderRadius: "8px",
+                    border: "1px solid #444",
+                    boxShadow: "0 0 100px rgba(255,255,255,0.1)", 
+                    maxWidth: "400px",
+                    width: "90%"
+                }}>
+                    <h2 style={{marginTop: 0, marginBottom: "1rem", color: "#fff"}}>🔒 Restricted Access</h2>
+                    <p style={{marginBottom: "1rem", color: "#ccc"}}>
+                      Please enter the password.
+                    </p>
+                    
+                    <input type="password" id="password-input" placeholder="Password" style={{
+                        padding: "12px",
+                        borderRadius: "4px",
+                        border: "1px solid #555",
+                        backgroundColor: "#111",
+                        color: "white",
+                        marginBottom: "10px",
+                        width: "100%",
+                        fontSize: "16px"
+                    }}/>
+                    
+                    <button id="password-submit" style={{
+                        width: "100%",
+                        padding: "12px",
+                        borderRadius: "4px",
+                        border: "none",
+                        backgroundColor: "#3a6ea5",
+                        color: "white",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                        fontSize: "16px"
+                    }}>Unlock</button>
+                    
+                    <p id="error-msg" style={{color: "#ff6b6b", marginTop: "1rem", display: "none"}}>
+                        Incorrect password.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -95,76 +92,76 @@ export default ((opts?: FooterOptions) => {
             // ==========================================
             // 👇 CHANGE YOUR PASSWORD HERE 👇
             // ==========================================
-            const correctPassword = "YOUR_PASSWORD_HERE"; 
+            const correctPassword = "kitten"; 
             // ==========================================
 
-            const lock = document.getElementById('site-lock');
-            const btn = document.getElementById('password-submit');
-            const input = document.getElementById('password-input');
-            const errorMsg = document.getElementById('error-msg');
+            function initLock() {
+                // 1. CHECK IF USER IS ALREADY LOGGED IN
+                // We use localStorage now so it persists across tabs and sessions
+                if (localStorage.getItem('site_unlocked') === 'true') {
+                    // If unlocked, remove any existing lock screens and exit
+                    const existing = document.getElementById('site-lock-overlay');
+                    if (existing) existing.remove();
+                    document.body.style.overflow = ""; // Ensure scroll is enabled
+                    return; 
+                }
 
-            // Function to lock scrolling
-            function disableScroll() {
+                // 2. CHECK IF LOCK ALREADY EXISTS ON BODY
+                // (Prevents creating duplicates when navigating pages)
+                if (document.getElementById('site-lock-overlay')) {
+                    return; 
+                }
+
+                // 3. MOVE LOCK TO BODY (Fixes Transparency)
+                // We grab the template from the footer and move it to <body>
+                // This ensures it sits on top of EVERYTHING and is 100% solid.
+                const template = document.getElementById('site-lock-template');
+                if (!template) return;
+
+                // Clone the inner overlay content
+                const overlay = template.firstElementChild.cloneNode(true);
+                document.body.appendChild(overlay);
+                
+                // Disable scrolling
                 document.body.style.overflow = "hidden";
-                document.body.style.height = "100vh";
-            }
 
-            // Function to unlock scrolling
-            function enableScroll() {
-                document.body.style.overflow = "";
-                document.body.style.height = "";
-            }
+                // 4. SETUP INTERACTION
+                const btn = overlay.querySelector('#password-submit');
+                const input = overlay.querySelector('#password-input');
+                const errorMsg = overlay.querySelector('#error-msg');
 
-            // 1. Initial Check
-            if (sessionStorage.getItem('auth_token') === correctPassword) {
-                if(lock) lock.style.display = 'none';
-                enableScroll();
-            } else {
-                // Force lock if not authenticated
-                if(lock) lock.style.display = 'flex';
-                disableScroll();
-            }
-
-            // 2. Validate Password
-            function checkPass() {
-                if (input.value === correctPassword) {
-                    sessionStorage.setItem('auth_token', correctPassword);
-                    lock.style.display = 'none';
-                    enableScroll();
-                } else {
-                    if(errorMsg) errorMsg.style.display = 'block';
-                    input.value = "";
-                    // Shake animation effect
-                    input.style.borderColor = "red";
-                    setTimeout(() => input.style.borderColor = "#555", 500);
-                }
-            }
-
-            // 3. Listeners
-            if(btn) btn.onclick = checkPass;
-            if(input) input.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    checkPass();
-                }
-            });
-
-            // 4. Trap Focus & Prevent "Flipping" (Aggressive)
-            // If the lock is visible, stop specific key presses
-            document.addEventListener('keydown', function(e) {
-                if (lock && lock.style.display !== 'none') {
-                    // Prevent generic keys, allow typing in input
-                    if (e.target !== input) {
-                        // Allow F5/Refresh, but block other navigation
-                        if (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === " " || e.key === "j" || e.key === "k") {
-                           e.stopPropagation();
-                           // optional: e.preventDefault(); 
-                        }
+                function checkPass() {
+                    if (input.value === correctPassword) {
+                        // Success!
+                        localStorage.setItem('site_unlocked', 'true');
+                        overlay.remove();
+                        document.body.style.overflow = ""; // Re-enable scroll
+                    } else {
+                        // Fail
+                        errorMsg.style.display = 'block';
+                        input.value = "";
                         input.focus();
                     }
                 }
-            });
 
+                btn.onclick = checkPass;
+                input.addEventListener("keypress", function(event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        checkPass();
+                    }
+                });
+                
+                // Focus the input immediately
+                setTimeout(() => input.focus(), 100);
+            }
+
+            // Run immediately
+            initLock();
+
+            // Re-run on navigation (Quartz SPA events)
+            document.addEventListener('nav', initLock);
+            window.addEventListener('popstate', initLock);
         })();
         `}} />
       </footer>
