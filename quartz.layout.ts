@@ -13,7 +13,7 @@ export const sharedPageComponents: SharedLayout = {
   }),
 }
 
-// 2. HOME PAGE LAYOUT (Fixing this hides Glossary from the front page)
+// 2. HOME PAGE LAYOUT
 export const defaultHomePageLayout: PageLayout = {
   beforeBody: [
     Component.ArticleTitle(),
@@ -30,10 +30,11 @@ export const defaultHomePageLayout: PageLayout = {
         },
       ],
     }),
+    // ADDED: The "About" link (defined in HomeLink.tsx)
+    Component.HomeLink(), 
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // FILTER: Hide glossary here too
       filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
@@ -74,10 +75,11 @@ export const defaultContentPageLayout: PageLayout = {
         },
       ],
     }),
+    // ADDED: The "About" link
+    Component.HomeLink(),
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // FILTER: Hide glossary
       filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
@@ -114,10 +116,11 @@ export const defaultListPageLayout: PageLayout = {
         },
       ],
     }),
+    // ADDED: The "About" link
+    Component.HomeLink(),
     Component.Explorer({
       title: "Contents",
       useSavedState: false,
-      // FILTER: Hide glossary
       filterFn: (node) => !["glossary", "Glossary"].includes(node.name),
       sortFn: (a, b) => {
         const aIsFolder = a.children.length > 0
