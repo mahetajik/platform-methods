@@ -24,8 +24,7 @@ export default ((opts?: FooterOptions) => {
           ))}
         </ul>
 
-        {/* --- PASSWORD PROTECTION COMPONENT --- */}
-        {/* We give it a unique ID so the script can find it */}
+        {/* --- PASSWORD PROTECTION TEMPLATE --- */}
         <div id="site-lock-template" style={{ display: "none" }}>
             <div id="site-lock-overlay" style={{
                 position: "fixed",
@@ -33,13 +32,12 @@ export default ((opts?: FooterOptions) => {
                 left: "0",
                 width: "100vw",
                 height: "100vh",
-                backgroundColor: "#000000", /* Pure Black */
-                zIndex: "2147483647", /* Max Z-Index */
+                backgroundColor: "#000000",
+                zIndex: "2147483647", 
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                opacity: "1", /* Force Opaque */
             }}>
                 <div style={{
                     textAlign: "center", 
@@ -90,54 +88,47 @@ export default ((opts?: FooterOptions) => {
         <script dangerouslySetInnerHTML={{ __html: `
         (function() {
             // ==========================================
-            // 👇 CHANGE YOUR PASSWORD HERE 👇
+            // 👇 PASSWORD CONFIGURATION
             // ==========================================
             const correctPassword = "kitten"; 
             // ==========================================
 
             function initLock() {
-                // 1. CHECK IF USER IS ALREADY LOGGED IN
-                // We use localStorage now so it persists across tabs and sessions
+                // 1. Check if unlocked
                 if (localStorage.getItem('site_unlocked') === 'true') {
-                    // If unlocked, remove any existing lock screens and exit
                     const existing = document.getElementById('site-lock-overlay');
                     if (existing) existing.remove();
-                    document.body.style.overflow = ""; // Ensure scroll is enabled
+                    document.body.style.overflow = "";
                     return; 
                 }
 
-                // 2. CHECK IF LOCK ALREADY EXISTS ON BODY
-                // (Prevents creating duplicates when navigating pages)
-                if (document.getElementById('site-lock-overlay')) {
-                    return; 
-                }
+                // 2. Check if lock is already active
+                if (document.getElementById('site-lock-overlay')) return;
 
-                // 3. MOVE LOCK TO BODY (Fixes Transparency)
-                // We grab the template from the footer and move it to <body>
-                // This ensures it sits on top of EVERYTHING and is 100% solid.
+                // 3. Find template (With Retry Logic)
                 const template = document.getElementById('site-lock-template');
-                if (!template) return;
+                if (!template) {
+                    // If not found, wait 50ms and try again
+                    setTimeout(initLock, 50);
+                    return;
+                }
 
-                // Clone the inner overlay content
+                // 4. Activate Lock
                 const overlay = template.firstElementChild.cloneNode(true);
                 document.body.appendChild(overlay);
-                
-                // Disable scrolling
                 document.body.style.overflow = "hidden";
 
-                // 4. SETUP INTERACTION
+                // 5. Setup Events
                 const btn = overlay.querySelector('#password-submit');
                 const input = overlay.querySelector('#password-input');
                 const errorMsg = overlay.querySelector('#error-msg');
 
                 function checkPass() {
                     if (input.value === correctPassword) {
-                        // Success!
                         localStorage.setItem('site_unlocked', 'true');
                         overlay.remove();
-                        document.body.style.overflow = ""; // Re-enable scroll
+                        document.body.style.overflow = "";
                     } else {
-                        // Fail
                         errorMsg.style.display = 'block';
                         input.value = "";
                         input.focus();
@@ -152,16 +143,14 @@ export default ((opts?: FooterOptions) => {
                     }
                 });
                 
-                // Focus the input immediately
                 setTimeout(() => input.focus(), 100);
             }
 
             // Run immediately
             initLock();
 
-            // Re-run on navigation (Quartz SPA events)
-            document.addEventListener('nav', initLock);
-            window.addEventListener('popstate', initLock);
+            // Handle Quartz Navigation
+            document.addEventListener('nav', () => setTimeout(initLock, 50));
         })();
         `}} />
       </footer>
