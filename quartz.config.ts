@@ -18,7 +18,8 @@ const config: QuartzConfig = {
     locale: "en-US",
     // ✅ This is correct. Do not change it.
     baseUrl: "mahetajik.github.io/platform-methods",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    // ⬇️ UPDATED: Added "glossary" to this list
+    ignorePatterns: ["private", "templates", ".obsidian", "glossary"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
