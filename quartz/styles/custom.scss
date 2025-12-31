@@ -28,3 +28,15 @@
 .section-li > .section {
   white-space: nowrap;
 }
+
+/* Hide the folder named "Glossary" in the sidebar */
+button[data-folderpath="glossary"], 
+button[data-folderpath="Glossary"] {
+    display: none !important;
+}
+
+/* Also hide the list of files inside it if expanded */
+div[data-folderpath="glossary"],
+div[data-folderpath="Glossary"] {
+    display: none !important;
+}
