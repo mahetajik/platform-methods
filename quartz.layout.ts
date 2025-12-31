@@ -3,30 +3,22 @@ import * as Component from "./quartz/components"
 
 // --- CONFIGURATION START ---
 
-// Define the Explorer component ONCE here to ensure consistency across all pages
+// Define the Explorer component ONCE here with the filter
 const explorerComponent = Component.Explorer({
   title: "Contents",
-  
-  // Keep as false to ensure the sidebar doesn't freeze/crash
   useSavedState: false, 
   
-  // NUCLEAR FILTER FUNCTION
+  // FILTER FUNCTION: Hides specific folders from the sidebar
   filterFn: (node) => {
-    // 1. Safety check: ensure name exists and make it lowercase
     const name = node.name ? node.name.toLowerCase() : ""
     
-    // 2. Hide "tags" specifically
+    // Hide "tags" and "glossary" from the menu
     if (name === "tags") return false
-    
-    // 3. THE WILDCARD FIX: 
-    // This hides ANY folder or file that contains the word "glossary"
-    // Examples hidden: "glossary", "Glossary", "glossary.md", "my-glossary"
     if (name.includes("glossary")) return false
     
     return true
   },
   
-  // FIXED SORT FUNCTION (Prevents crashes)
   sortFn: (a, b) => {
     const aIsFolder = a.children.length > 0
     const bIsFolder = b.children.length > 0
@@ -34,7 +26,6 @@ const explorerComponent = Component.Explorer({
     if (!aIsFolder && bIsFolder) return -1
     if (aIsFolder && !bIsFolder) return 1
     
-    // Safety check: use displayName, fallback to name, fallback to empty string
     const aName = a.displayName || a.name || ""
     const bName = b.displayName || b.name || ""
     
@@ -54,7 +45,7 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-      // Add your links here
+      "GitHub": "https://github.com/mahetajik/platform-methods",
     },
   }),
 }
@@ -76,8 +67,8 @@ export const defaultHomePageLayout: PageLayout = {
         },
       ],
     }),
-    Component.HomeLink(), 
-    explorerComponent, // <--- Using the unified explorer here
+    Component.HomeLink(), // ✅ Added back
+    explorerComponent, 
   ],
   right: [
     Component.DesktopOnly(Component.TableOfContents()),
@@ -106,8 +97,8 @@ export const defaultContentPageLayout: PageLayout = {
         },
       ],
     }),
-    Component.HomeLink(),
-    explorerComponent, // <--- Using the unified explorer here
+    Component.HomeLink(), // ✅ Added back
+    explorerComponent, 
   ],
   right: [
     Component.DesktopOnly(Component.TableOfContents()),
@@ -132,8 +123,8 @@ export const defaultListPageLayout: PageLayout = {
         },
       ],
     }),
-    Component.HomeLink(),
-    explorerComponent, // <--- Using the unified explorer here
+    Component.HomeLink(), // ✅ Added back
+    explorerComponent,
   ],
   right: [],
   afterBody: [],
