@@ -49,3 +49,63 @@ a.internal:hover {
   padding: 0 2px;                     /* Adds a tiny bit of breathing room */
   transition: background-color 0.2s;  /* Makes the color fade in smoothly */
 }
+
+/* Blue Highlighter Effect for Titles */
+.article-title {
+  color: black !important;      /* Keeps the text black */
+  background-color: #c3cad9;    /* Gentle Blue background color */
+  width: fit-content;           /* Highlight ONLY the text, not the whole line */
+  padding: 0.1em 0.4em;         /* Adds a tiny bit of breathing room */
+  border-radius: 6px;           /* Rounds the corners of the highlight */
+  
+  /* Optional: Make it look consistent in Dark Mode */
+  /* This ensures the text is readable on the blue background even in dark mode */
+}
+
+/* --- Widen the Center Column --- */
+.page {
+  max-width: 1900px !important; /* Default is ~750px. Try 1000px or 1200px */
+  width: 100%;
+}
+
+/* Optional: Adjust for mobile so it doesn't break on phones */
+@media (max-width: 800px) {
+  .page {
+    max-width: 90% !important;
+  }
+}
+
+/* =============================================== */
+/* 2. FORCE FOLDER LIST TO STAY ON ONE LINE        */
+/* =============================================== */
+/* Target the list items specifically */
+.section-list > li {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important; /* STRICTLY forbid wrapping */
+  align-items: baseline !important;
+  gap: 1.5rem; /* Add clear space between number and title */
+  margin-bottom: 0.5rem;
+}
+
+/* Fix the "Number" or "Date" (Meta info) */
+.section-list > li > .section-li-info {
+  flex: 0 0 auto !important; /* Do not grow, do not shrink */
+  width: auto !important;
+  min-width: fit-content;
+  white-space: nowrap !important; /* Keep "1.1" on one line */
+  margin: 0 !important;
+}
+
+/* Fix the Title (Link) */
+.section-list > li > .internal {
+  flex: 1 1 auto !important; /* Take up all remaining space */
+  min-width: 0 !important; /* Allow text to wrap naturally INSIDE the block */
+  display: block !important;
+}
+
+/* Optional: Hide the default bullet point if it's getting in the way */
+.section-list {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
