@@ -3,4 +3,12 @@ This notebook contains research updates for the first quarter of 2026—from Jan
 
  ```
  fix: theory section of discursive chapter 
+ chore: timeline for dissertation
+ ```
+
+### 02/24/2026 
+
+ ```
+ fix: continue with theory section of discursive chapter 
+ chore: timeline for dissertation
  ```
