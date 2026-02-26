@@ -11,10 +11,3 @@ I am a PhD candidate and course instructor at the [Faculty of Information](http
 I am a 2024-2026 Junior Fellow at [Massey College](https://www.masseycollege.ca/) and a 2025-2026 Graduate Fellow at the [Schwartz Reisman Institute](https://srinstitute.utoronto.ca/). My research is funded by a Doctoral Award from the [Social Sciences and Humanities Research Council](https://www.sshrc-crsh.gc.ca/home-accueil-eng.aspx) (SSHRC).
 
 ## Why Platform Tools and Platform Power Matter
-Tools matter—they matter for the culture we consume, 
-
-The act of cultural production 
-
-https://www.marxists.org/reference/archive/benjamin/1970/author-producer.htm act of resistance; change the cultural apparatus; change the tools;  ‘functional transformation’ (Umfunktionierung)
-
-Platform companies matter 
