@@ -29,3 +29,8 @@ feat: insert data for section 3 of IJoC paper
 feat: update methods section of discursive chapter 
 ```
 
+### 03/11/2026
+
+```
+feat: update outline for discursive chapter 
+```
