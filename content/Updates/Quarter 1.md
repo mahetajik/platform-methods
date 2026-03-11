@@ -23,3 +23,9 @@ fix: theory section of discursive chapter
 feat: insert data for section 3 of IJoC paper 
 ```
 
+### 03/10/2026
+
+```
+feat: update methods section of discursive chapter 
+```
+
