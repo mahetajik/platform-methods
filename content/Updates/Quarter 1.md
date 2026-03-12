@@ -34,3 +34,9 @@ feat: update methods section of discursive chapter
 ```
 feat: update outline for discursive chapter 
 ```
+
+### 03/12/2026
+
+```
+refactor: rewrite theory and methods for discursive chapter 
+```
