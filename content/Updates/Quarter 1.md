@@ -20,23 +20,31 @@ fix: theory section of discursive chapter
 ### 03/09/2026
 
 ```
-feat: insert data for section 3 of IJoC paper 
+feat: data for section 3 of IJoC paper 
 ```
 
 ### 03/10/2026
 
 ```
-feat: update methods section of discursive chapter 
+feat: methods section of discursive chapter 
 ```
 
 ### 03/11/2026
 
 ```
-feat: update outline for discursive chapter 
+feat: outline for discursive chapter 
 ```
 
 ### 03/12/2026
 
 ```
-refactor: rewrite theory and methods for discursive chapter 
+refactor: theory and methods for discursive chapter 
+```
+
+### 03/17/2026
+
+```
+refactor: introduction of discursive chapter 
+feat: methods of discursive chapter
+refactor: theory section of discursive chapter
 ```
